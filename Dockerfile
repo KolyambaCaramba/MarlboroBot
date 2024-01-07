@@ -18,4 +18,4 @@ COPY . .
 RUN ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 # Запускаем приложение при старте контейнера
-CMD ["python", "run_scripts.py"]
+CMD ["python", "main.py"]

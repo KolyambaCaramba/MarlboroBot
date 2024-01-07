@@ -23,7 +23,7 @@ async def menu(msg: Message):
 async def message_handler(msg: Message):
     # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="MarlBoro-001",
         user="postgres",
         password="123qwe"
@@ -58,7 +58,7 @@ async def message_handler(msg: Message):
 async def callback_query_handler(query: types.CallbackQuery):
     # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="MarlBoro-001",
         user="postgres",
         password="123qwe"
@@ -114,7 +114,7 @@ async def player_callback_handler(query: types.CallbackQuery):
     last_name = query.data.split(':')[1]
      # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="MarlBoro-001",
         user="postgres",
         password="123qwe"
@@ -181,7 +181,7 @@ async def player_callback_handler(query: types.CallbackQuery):
 async def callback_query_handler(query: types.CallbackQuery):
     # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="MarlBoro-001",
         user="postgres",
         password="123qwe"
@@ -207,7 +207,7 @@ async def callback_query_handler(query: types.CallbackQuery):
 async def callback_query_handler(query: types.CallbackQuery):
      # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="MarlBoro-001",
         user="postgres",
         password="123qwe"
@@ -252,7 +252,7 @@ async def callback_query_handler(query: types.CallbackQuery):
 async def message_handler(msg: Message):
     # Устанавливаем соединение с базой данных
     conn = psycopg2.connect(
-         host="localhost",
+         host="db",
          database="MarlBoro-001",
          user="postgres",
          password="123qwe"
