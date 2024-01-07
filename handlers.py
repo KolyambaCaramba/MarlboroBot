@@ -5,6 +5,18 @@ from aiogram.filters import Command
 
 import kb
 import text
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+def create_connection():
+    return psycopg2.connect(
+        host=os.environ.get('DB_HOST'),
+        database=os.environ.get("DB_NAME"),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASS")
+    )
+
 
 router = Router()
 
@@ -22,12 +34,7 @@ async def menu(msg: Message):
 @router.message(Command("lastm"))
 async def message_handler(msg: Message):
     # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="db",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
+    conn = create_connection()
     try:
         # Создаем курсор для выполнения SQL-запросов
         with conn.cursor() as cursor:
@@ -57,13 +64,7 @@ async def message_handler(msg: Message):
 @router.callback_query(F.data == "lastm")
 async def callback_query_handler(query: types.CallbackQuery):
     # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="db",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
-
+    conn = create_connection()
     # Создаем курсор для выполнения SQL-запросов
     cursor = conn.cursor()
 
@@ -84,12 +85,7 @@ async def callback_query_handler(query: types.CallbackQuery):
 @router.message(Command("players"))
 async def message_handler(msg: Message):
     # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="localhost",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
+    conn = create_connection()
      # Создаем курсор для выполнения SQL-запросов
     cursor = conn.cursor()
      # Извлекаем список игроков из таблицы player
@@ -113,12 +109,7 @@ async def player_callback_handler(query: types.CallbackQuery):
     # Извлекаем фамилию игрока из callback_data
     last_name = query.data.split(':')[1]
      # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="db",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
+    conn = create_connection()
      # Создаем курсор для выполнения SQL-запросов
     with conn.cursor() as cursor:
         # Извлекаем данные игрока из таблицы player
@@ -180,12 +171,7 @@ async def player_callback_handler(query: types.CallbackQuery):
 @router.callback_query(F.data == "players")
 async def callback_query_handler(query: types.CallbackQuery):
     # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="db",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
+    conn = create_connection()
 
     # Создаем курсор для выполнения SQL-запросов
     cursor = conn.cursor()
@@ -206,12 +192,7 @@ async def callback_query_handler(query: types.CallbackQuery):
 @router.callback_query(F.data == "results")
 async def callback_query_handler(query: types.CallbackQuery):
      # Устанавливаем соединение с базой данных
-    conn = psycopg2.connect(
-        host="db",
-        database="MarlBoro-001",
-        user="postgres",
-        password="123qwe"
-    )
+    conn = create_connection()
      # Создаем курсор для выполнения SQL-запросов
     with conn.cursor() as cursor:
 

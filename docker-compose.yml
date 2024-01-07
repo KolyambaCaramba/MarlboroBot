@@ -6,7 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
+    env_file:
+      - ./.env
     depends_on:
       - db
     restart: always
@@ -22,4 +23,5 @@ services:
       POSTGRES_DB: MarlBoro-001
     volumes:
       - ./data:/var/lib/postgresql/data
+    command: "pg_restore -d MarlBoro-001 -U postgres -C MarlBoro-001.sql"
 
