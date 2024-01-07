@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  bot:
+    build:
+      context: ***тут будет путь к папке с докерфайлом***
+      dockerfile: Dockerfile
+    env_file:
+      - ./v2/.env
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: your_database
+    volumes:
+      - ./data:/var/lib/postgresql/data
