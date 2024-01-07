@@ -1,0 +1,112 @@
+CREATE DATABASE "MarlBoro-001"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Russian_Russia.1251'
+    LC_CTYPE = 'Russian_Russia.1251'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+CREATE SCHEMA IF NOT EXISTS public
+    AUTHORIZATION pg_database_owner;
+
+COMMENT ON SCHEMA public
+    IS 'standard public schema';
+
+GRANT USAGE ON SCHEMA public TO PUBLIC;
+
+GRANT ALL ON SCHEMA public TO pg_database_owner;
+
+CREATE TABLE IF NOT EXISTS public.goal_details
+(
+    goal_id integer NOT NULL DEFAULT nextval('goal_details_goal_id_seq'::regclass),
+    match_id integer,
+    who_score integer,
+    who_assist integer,
+    CONSTRAINT goal_details_pkey PRIMARY KEY (goal_id),
+    CONSTRAINT goal_details_who_assist_check CHECK (who_assist >= 0),
+    CONSTRAINT goal_details_who_score_check CHECK (who_score >= 0)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.goal_details
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.json_mbr
+(
+    id integer,
+    data jsonb
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.json_mbr
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.matches
+(
+    match_id integer NOT NULL DEFAULT nextval('matches_match_id_seq'::regclass),
+    play_date date,
+    opponent character varying(20) COLLATE pg_catalog."default",
+    team_points integer,
+    scored integer,
+    missed integer,
+    tournament_id integer,
+    ref character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT matches_pkey PRIMARY KEY (match_id),
+    CONSTRAINT matches_scored_check CHECK (scored >= 0),
+    CONSTRAINT matches_scored_check1 CHECK (scored >= 0),
+    CONSTRAINT matches_team_points_check CHECK (team_points = ANY (ARRAY[0, 1, 3]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.matches
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.matches_players
+(
+    player_id integer NOT NULL,
+    match_id integer NOT NULL,
+    CONSTRAINT matches_players_pkey PRIMARY KEY (player_id, match_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.matches_players
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.players
+(
+    player_id integer NOT NULL DEFAULT nextval('players_player_id_seq'::regclass),
+    first_name character varying(15) COLLATE pg_catalog."default",
+    last_name character varying(20) COLLATE pg_catalog."default",
+    birthday date,
+    CONSTRAINT players_pkey PRIMARY KEY (player_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.players
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.tournaments
+(
+    tournament_id integer NOT NULL DEFAULT nextval('tournaments_tournament_id_seq'::regclass),
+    tournament_name character varying(20) COLLATE pg_catalog."default",
+    start_date date,
+    end_date date,
+    number_of_teams integer,
+    our_table_place integer,
+    CONSTRAINT tournaments_pkey PRIMARY KEY (tournament_id),
+    CONSTRAINT tournaments_number_of_teams_check CHECK (number_of_teams >= 0),
+    CONSTRAINT tournaments_number_of_teams_check1 CHECK (number_of_teams >= 0)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tournaments
+    OWNER to postgres;

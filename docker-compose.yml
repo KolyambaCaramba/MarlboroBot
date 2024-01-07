@@ -23,5 +23,5 @@ services:
       POSTGRES_DB: MarlBoro-001
     volumes:
       - ./data:/var/lib/postgresql/data
-    command: "pg_restore -d MarlBoro-001 -U postgres -C MarlBoro-001.sql"
+    command: "pg_restore -d MarlBoro-001 -U postgres -C ./MarlBoro-001.sql"
 
