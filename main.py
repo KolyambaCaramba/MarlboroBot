@@ -8,9 +8,11 @@ from aiogram import Dispatcher
 
 import config
 from handlers import router
+from init_db import init_database
 
 
 async def main():
+    init_database()
     bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(router)
